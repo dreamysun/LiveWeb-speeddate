@@ -1,0 +1,25 @@
+.container {
+  display: grid;
+  grid: repeat(3, 17vw) / auto-flow;
+}
+
+.row {
+  display: grid;
+  grid: repeat(1, 17vw) / auto-flow;
+}
+
+.row > .square {
+  margin: 12px;
+  background: tomato;
+}
+
+@media (orientation: portrait) {
+
+  .container {
+    transform: rotate(90deg) translate(35%);
+  }
+
+  .row > .square {
+    transform: rotate(-90deg);
+  }
+}
