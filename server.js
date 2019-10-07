@@ -55,7 +55,6 @@ io.sockets.on('connection',
     console.log("We have a new client: " + socket.id);
     socket.on('new peer',function(data){
     //  console.log("new peer id:" + peerid);
-
     var newPeer = {
       id: socket.id,
       peerid: data.id,
@@ -65,9 +64,13 @@ io.sockets.on('connection',
     peers.push(newPeer);
     console.log("Peer array: "+ peers);
 
-  //  socket.emit('new peer enter',newPeer);
     socket.emit('new peer enter',peers);
-    socket.broadcast.emit('new peer enter to all',peers);
+
+    setTimeout(
+      function () {
+      socket.broadcast.emit('new peer enter to all',peers);
+    }, 1000);
+
 
     socket.on('disconnect', function() {
       console.log("Client has disconnected");

@@ -1,4 +1,3 @@
-// We'll use a global variable to hold on to our id from PeerJS
 var peerData = [];
 var mypeerid;
 // I setup a peer server on a Digital Ocean instance for our use, you can use that with the following constructor:
@@ -14,26 +13,16 @@ socket.on('connect', function() {
 peer.on('open', function(id) {
     //console.log('My peer ID is: ' + id);
     mypeerid = id;
-    socket.emit('new peer',id);
 });
 
 peer.on('error', function(err) {
     console.log(err);
 });
 
-//you are a player
-socket.on('new peer',function(data){
-  //  console.log("new peer in");
-    //console.log(data);
-});
-
-
 socket.on('new peer enter', function (data) {
     console.log("new peer in!!!!!!!");
     //create div and img
-
     var length = data.length;
-
     var imageDom = document.getElementById('images');
 
     for (let i = 0; i < length; i++){
@@ -64,8 +53,20 @@ socket.on('new peer enter', function (data) {
 
 
 socket.on('new peer enter to all',(data)=>{
-    //console.log("a new peer joined: "+ data[data.length-1].id + "  peerid：" + data[data.length-1].peerid + "   imagedata：" + data[data.length-1].img);
-  
+    console.log("a new peer joined: "+ data[data.length-1].id + "  peerid：" + data[data.length-1].peerid + "   imagedata：" + data[data.length-1].img);
+    var length = data.length;
+    var imageDom = document.getElementById('images');
+
+    for (let i = 0; i < length; i++){
+        imageDom.children[i].src = data[i].img;
+        imageDom.children[i].setAttribute('id', data[i].peerid);
+
+        imageDom.children[i].addEventListener('click', function () {
+            console.log('clicked: ' + data[i].peerid);
+            makeCall(data[i].peerid)
+        });
+    }
+
 });
 
 
@@ -80,13 +81,10 @@ peer.on('call', function(incoming_call) {
     incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
         // And attach it to a video object
         var ovideoElement = document.getElementById('othervideo');
-        //ovideoElement.id = "something";
         ovideoElement.srcObject = remoteStream;
-        //ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
         ovideoElement.setAttribute("autoplay", "true");
         ovideoElement.play();
         document.body.appendChild(ovideoElement);
-        //window.location.hash = "#something";
     });
       window.location.hash = "#othervideo";
   };
@@ -99,8 +97,6 @@ function makeCall(idToCall) {
         console.log("Got remote stream");
         var ovideoElement = document.getElementById('othervideo');
         ovideoElement.srcObject = remoteStream;
-        //ovideoElement.id = "something2";
-        // ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
         ovideoElement.setAttribute("autoplay", "true");
         ovideoElement.play();
         document.body.appendChild(ovideoElement);
@@ -149,7 +145,7 @@ function makeCall(idToCall) {
                   //  console.log(snapshot);
                     peerData.push(mypeerData);
                     socket.emit('new peer', mypeerData);
-                }, 1000);
+                }, 800);
             })
 
 
