@@ -68,9 +68,8 @@ io.sockets.on('connection',
 
     setTimeout(
       function () {
-      //  socket.emit('new peer enter',peers);
       socket.broadcast.emit('new peer enter to all',peers);
-    }, 900);
+    }, 1000);
 
 
     socket.on('disconnect', function() {

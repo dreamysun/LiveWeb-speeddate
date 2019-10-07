@@ -22,7 +22,18 @@ peer.on('error', function(err) {
 socket.on('new peer enter', function (data) {
     console.log("new peer in!!!!!!!");
     //create div and img
+    var length = data.length;
+    var imageDom = document.getElementById('images');
 
+    for (let i = 0; i < length; i++){
+        imageDom.children[i].src = data[i].img;
+        imageDom.children[i].setAttribute('id', data[i].peerid);
+
+        imageDom.children[i].addEventListener('click', function () {
+            console.log('clicked: ' + data[i].peerid);
+            makeCall(data[i].peerid)
+        });
+    }
 
     // data.forEach(item => {
     //     console.log(item);
@@ -52,10 +63,9 @@ socket.on('new peer enter to all',(data)=>{
 
         imageDom.children[i].addEventListener('click', function () {
             console.log('clicked: ' + data[i].peerid);
-            makeCall(data[i].peerid);
+            makeCall(data[i].peerid)
         });
     }
-
 });
 
 
