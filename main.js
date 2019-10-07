@@ -31,7 +31,7 @@ socket.on('new peer enter', function (data) {
 
         imageDom.children[i].addEventListener('click', function () {
             console.log('clicked: ' + data[i].peerid);
-            makeCall(data[i].peerid)
+            //makeCall(data[i].peerid);
         });
     }
 
@@ -63,7 +63,7 @@ socket.on('new peer enter to all',(data)=>{
 
         imageDom.children[i].addEventListener('click', function () {
             console.log('clicked: ' + data[i].peerid);
-            makeCall(data[i].peerid)
+            makeCall(data[i].peerid);
         });
     }
 });

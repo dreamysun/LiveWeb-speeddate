@@ -36,15 +36,15 @@ head, body{
 #myvideo{
   /* margin-left: 50vw;
   transform: translate(-50%); */
-  margin-left: 10vw;
+  margin-left: 8vw;
   margin-top: 60vh;
   margin-bottom: 30vh;
 }
 #othervideo{
   /* margin-left: 50vw;
   transform: translate(-50%); */
-  padding-left: 30;
-  margin-right: 10vw;
+  padding-left: 20;
+  /* margin-right: 10vw; */
   margin-top: 60vh;
   margin-bottom: 30vh;
 }
