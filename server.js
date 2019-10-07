@@ -69,13 +69,19 @@ io.sockets.on('connection',
     socket.emit('new peer enter',peers);
     socket.broadcast.emit('new peer enter to all',peers);
 
-    // socket.on('new peer enter', function(ids){
-    //   console.log("peer id: " + data.peerid + "    socketid: " + data.id);
-    //
-    // });
-
     socket.on('disconnect', function() {
       console.log("Client has disconnected");
+      for (let i =0 ; i < peers.length; i++){
+      //if the user is a player, remove it from the players list
+      if (peers[i].id == socket.id){
+        console.log(peers[i].id);
+        console.log(i);
+        peers.splice(i,1);
+        console.log("a player is disconnected");
+        socket.emit('new peer enter',peers);
+        socket.broadcast.emit('new peer enter to all',peers);
+      };
+    }
     });
 
    });

@@ -1,7 +1,47 @@
+head, body{
+  overflow: hidden;
+  background: linear-gradient(270deg, #246655, #3673d9, #d936a1, #cd90f0, #8eb234);
+  background-size: 1000% 1000%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+
+#myvideo{
+  /* margin-left: 50vw;
+  transform: translate(-50%); */
+  margin-bottom: 30vh;
+}
+#othervideo{
+  /* margin-left: 50vw;
+  transform: translate(-50%); */
+  margin-bottom: 30vh;
+}
+
 .container {
   display: grid;
   grid: repeat(3, 17vw) / auto-flow;
 }
+
 
 .row {
   display: grid;

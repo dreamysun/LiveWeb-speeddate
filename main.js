@@ -1,6 +1,3 @@
-//socket.on()
-
-
 // We'll use a global variable to hold on to our id from PeerJS
 var peerData = [];
 var mypeerid;
@@ -13,11 +10,9 @@ socket.on('connect', function() {
     console.log("Connected");
 });
 
-
-
 // Get an ID from the PeerJS server
 peer.on('open', function(id) {
-    console.log('My peer ID is: ' + id);
+    //console.log('My peer ID is: ' + id);
     mypeerid = id;
     socket.emit('new peer',id);
 });
@@ -28,40 +23,73 @@ peer.on('error', function(err) {
 
 //you are a player
 socket.on('new peer',function(data){
-    console.log("new peer in");
-    console.log(data);
+  //  console.log("new peer in");
+    //console.log(data);
 });
 
 
-socket.on('new peer enter',function(data){
-    console.log("new peer in");
-    //console.log("peer id: " + data.peerid + "    socketid: " + data.id);
-    console.log(data);
+socket.on('new peer enter', function (data) {
+    console.log("new peer in!!!!!!!");
+    //create div and img
+
+    var length = data.length;
+
+    var imageDom = document.getElementById('images');
+
+    for (let i = 0; i < length; i++){
+        imageDom.children[i].src = data[i].img;
+        imageDom.children[i].setAttribute('id', data[i].peerid);
+
+        imageDom.children[i].addEventListener('click', function () {
+            console.log('clicked: ' + data[i].peerid);
+            makeCall(data[i].peerid)
+        });
+    }
+
+    // data.forEach(item => {
+    //     console.log(item);
+    //     console.log(data.length);
+    //     let createDiv = document.createElement('div');
+    //     let createImg = document.createElement('img');
+    //     let container = document.getElementById('container');
+    //     createDiv.classList.add('users', 'square');
+    //     createDiv.setAttribute('id', item.peerid);
+    //     createImg.src = item.img;
+    //     createDiv.appendChild(createImg);
+    //     container.appendChild(createDiv);
+
+  //  })
 });
 
 
 
 socket.on('new peer enter to all',(data)=>{
-    console.log("a new peer joined: "+ data[data.length-1].id + "  peerid    " + data[data.length-1].peerid + "   imagedata   " + data[data.length-1].img);
+    //console.log("a new peer joined: "+ data[data.length-1].id + "  peerid：" + data[data.length-1].peerid + "   imagedata：" + data[data.length-1].img);
+  
 });
-
 
 
 
 
 peer.on('call', function(incoming_call) {
     console.log("Got a call!");
+    var acceptsCall = confirm(" Blind Spaeed Date: Videocall incoming, do you want to accept it ?");
+
+    if(acceptsCall){
     incoming_call.answer(my_stream); // Answer the call with our stream from getUserMedia
     incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
         // And attach it to a video object
-        var ovideoElement = document.createElement('video');
-        // ovideoElemnt.id = "something";
+        var ovideoElement = document.getElementById('othervideo');
+        //ovideoElement.id = "something";
         ovideoElement.srcObject = remoteStream;
         //ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
         ovideoElement.setAttribute("autoplay", "true");
         ovideoElement.play();
         document.body.appendChild(ovideoElement);
+        //window.location.hash = "#something";
     });
+      window.location.hash = "#othervideo";
+  };
 });
 
 function makeCall(idToCall) {
@@ -69,17 +97,20 @@ function makeCall(idToCall) {
 
     call.on('stream', function(remoteStream) {
         console.log("Got remote stream");
-        var ovideoElement = document.createElement('video');
+        var ovideoElement = document.getElementById('othervideo');
         ovideoElement.srcObject = remoteStream;
+        //ovideoElement.id = "something2";
         // ovideoElement.src = window.URL.createObjectURL(remoteStream) || remoteStream;
         ovideoElement.setAttribute("autoplay", "true");
         ovideoElement.play();
         document.body.appendChild(ovideoElement);
+        window.location.hash = "#othervideo";
     });
 }
 
-/* Get User Media */
 
+/* Get User Media */
+    let my_steam = null;
     let webcamSettings = {
         audio: false,
         video: true,
@@ -94,25 +125,28 @@ function makeCall(idToCall) {
       let context = canvas.getContext('2d');
       let webcam = document.getElementById('myvideo');
 
+
         //if permission allowed
         navigator.mediaDevices.getUserMedia(webcamSettings)
             .then(function (stream) {
+
+              // Global for stream
 
                 webcam.srcObject = stream;
                 webcam.onloadedmetadata = function (e) {
                     webcam.play();
                 }
+
+                my_stream = stream;
                 setTimeout(
                   function () {
-                     //console.log('take a snapshot');
-                    //var imageData = context.getImageData(0,0,20,20);
                     context.drawImage(webcam, 0, 0);
                     let snapshot = canvas.toDataURL('image/jpeg');
                     var mypeerData = {
                       id:mypeerid,
                       img:snapshot
                     };
-                    console.log(snapshot);
+                  //  console.log(snapshot);
                     peerData.push(mypeerData);
                     socket.emit('new peer', mypeerData);
                 }, 1000);
