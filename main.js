@@ -74,7 +74,6 @@ socket.on('new peer enter to all',(data)=>{
 peer.on('call', function(incoming_call) {
     console.log("Got a call!");
     var acceptsCall = confirm(" Blind Spaeed Date: Videocall incoming, do you want to accept it ?");
-
     if(acceptsCall){
     incoming_call.answer(my_stream); // Answer the call with our stream from getUserMedia
     incoming_call.on('stream', function(remoteStream) {  // we receive a getUserMedia stream from the remote caller
@@ -144,7 +143,7 @@ function makeCall(idToCall) {
                   //  console.log(snapshot);
                     peerData.push(mypeerData);
                     socket.emit('new peer', mypeerData);
-                }, 800);
+                }, 600);
             })
 
 
