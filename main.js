@@ -66,7 +66,6 @@ socket.on('new peer enter to all',(data)=>{
             makeCall(data[i].peerid)
         });
     }
-
 });
 
 

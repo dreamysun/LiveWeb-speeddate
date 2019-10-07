@@ -25,30 +25,53 @@ head, body{
     100%{background-position:0% 50%}
 }
 
+.square{
+    width:15%;
+    height:20%;
+    float:left;
+    margin-left:20px;
+    margin-top:20px;
+}
 
 #myvideo{
   /* margin-left: 50vw;
   transform: translate(-50%); */
+  margin-left: 10vw;
+  margin-top: 60vh;
   margin-bottom: 30vh;
 }
 #othervideo{
   /* margin-left: 50vw;
   transform: translate(-50%); */
+  padding-left: 30;
+  margin-right: 10vw;
+  margin-top: 60vh;
   margin-bottom: 30vh;
 }
 
-.container {
+#canvas{
+  display: none;
+}
+#webcam{
+  display: none;
+}
+
+.container{
+  margin-top: 5vh;
+}
+
+/* .container {
   display: grid;
   grid: repeat(3, 17vw) / auto-flow;
-}
+} */
 
 
-.row {
+/* .row {
   display: grid;
   grid: repeat(1, 17vw) / auto-flow;
-}
+} */
 
-.row > .square {
+/* .row > .square {
   margin: 12px;
   background: tomato;
 }
@@ -62,4 +85,4 @@ head, body{
   .row > .square {
     transform: rotate(-90deg);
   }
-}
+} */
