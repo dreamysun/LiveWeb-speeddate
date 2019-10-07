@@ -143,7 +143,7 @@ function makeCall(idToCall) {
                   //  console.log(snapshot);
                     peerData.push(mypeerData);
                     socket.emit('new peer', mypeerData);
-                }, 600);
+                }, 800);
             })
 
 
